@@ -31,13 +31,13 @@ class insarpred():
         features_only=Input((self.infeatures))
         x=layers.Dense(units=self.units,activation='selu',name=f'DN_0',kernel_initializer=self.kernel_initializer,bias_initializer=self.bias_initializer)(features_only)
         for i in range(1,self.depth+1):
-            x=layers.Dense(activation=None,units=self.units,name=f'DN_{str(i)}',kernel_initializer=self.kernel_initializer,bias_initializer=self.bias_initializer)(x)
+            x=layers.Dense(activation='relu',units=self.units,name=f'DN_{str(i)}',kernel_initializer=self.kernel_initializer,bias_initializer=self.bias_initializer)(x)
             if self.batchnormalization:
                 x= layers.BatchNormalization()(x)
             if self.droupout:
                 x= layers.Dropout(self.dropoutratio)(x) 
-            x=layers.LeakyReLU(alpha=0.02)(x)     
-        out_areaDen=layers.Dense(units=self.outfeatures,activation=self.lastactivation,name='insar')(x)
+            x=layers.ReLU()(x)     
+        out_areaDen=layers.Dense(units=self.outfeatures,activation="relu",name='insar')(x)
         self.model = Model(inputs=features_only, outputs=out_areaDen)
 
     def getOptimizer(self,):

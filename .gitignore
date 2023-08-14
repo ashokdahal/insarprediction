@@ -1,2 +1,6 @@
 \Data
 \wandb
+run.py
+*.sh
+\checkpoints
+\.ipynb_checkpoints
